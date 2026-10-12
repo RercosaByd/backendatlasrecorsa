@@ -19,7 +19,8 @@ const BULK_LIMIT = parseInt(process.env.CLIENTE_BULK_LIMIT) || 1000;
 // ============================================================================
 // 🔥 CONEXIÓN A MONGODB ATLAS
 // ============================================================================
-mongoose.connect(process.env.MONGO_URI)
+var MONGO_URI ="mongodb+srv://recorsabyd_db_user:124T57Pt7zfx3weB@cluster0.cl3f5mb.mongodb.net/?appName=Cluster0"; 
+mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB Atlas conectado'))
   .catch(err => console.error('❌ Error de conexión MongoDB:', err));
 
