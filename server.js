@@ -19,9 +19,7 @@ const BULK_LIMIT = parseInt(process.env.CLIENTE_BULK_LIMIT) || 1000;
 // ============================================================================
 // 🔥 CONEXIÓN A MONGODB ATLAS
 // ============================================================================
-const MONGO_URI = process.env.MONGO_URI;
- 
-mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Atlas conectado'))
   .catch(err => console.error('❌ Error de conexión MongoDB:', err));
 
@@ -1213,10 +1211,11 @@ app.put("/api/empresa/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = { ...req.body };
-    delete updateData.rucempresa;
+    console.log("RUC received:", JSON.stringify(req.body.rucempresa));
     delete updateData._id;
     delete updateData.createdAt;
-    const updated = await EmpresaConfig.findByIdAndUpdate(id, updateData, { new: true, runValidators: true, context: 'query' });
+    const updated = await EmpresaConfig.findByIdAndUpdate(id, updateData,
+    { new: true, runValidators: true, context: 'query' });
     if (!updated) return res.status(404).json({ success: false, message: "Configuración no encontrada" });
     res.json({ success: true, message: "✅ Configuración actualizada exitosamente", data: updated });
   } catch (err) {
